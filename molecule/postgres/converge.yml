@@ -1,0 +1,59 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    - centos_base_enable_epel: true
+    - centos_base_fail2ban_configuration: false
+    - centos_base_install_selinux_packages: true
+    - centos_base_basic_packages: true
+    - centos_base_security_packages: true
+    - centos_base_firewalld: true
+    - ruby_version: 2.3
+    - ruby_install_globally: true
+  roles:
+    - bngsudheer.centos_base
+    - bngsudheer.ruby
+
+
+- name: Converge
+  hosts: all
+  vars:
+    - redmine_sql_database_name: "redmine"
+    - redmine_sql_database_host: "127.0.0.1"
+    - redmine_sql_username: "redmine"
+    - redmine_sql_password: "password"
+    - redmine_sql_driver: postgresql
+    - redmine_unicorn_port: 5777
+    - redmine_configure_selinux: false
+    - redmine_plugins:
+        - name: scrum
+          base_name: scrum
+          url: https://redmine.ociotec.com/attachments/download/481/scrum-v0.18.1.tar.gz
+          create_base_directory: false
+        - name: timesheet
+          base_name: timesheet
+          url: https://github.com/Contargo/redmine-timesheet-plugin/archive/master.zip
+          create_base_directory: false
+    - postgresql_hba_entries:
+        - { type: local, database: all, user: postgres, auth_method: peer }
+        - { type: local, database: all, user: all, auth_method: peer }
+        - { type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5 }
+        - { type: host, database: all, user: all, address: '::1/128', auth_method: md5 }
+    - postgresql_databases:
+        - name: redmine
+    - postgresql_users:
+        - name: redmine
+          password: password
+          db: redmine
+    - redmine_additional_configuration: true
+    - redmine_enable_smtp_email: true
+    - redmine_smtp_settings_address: localhost
+    - redmine_smtp_settings_port: 25
+    - redmine_smtp_settings_authentication: plain
+    - redmine_smtp_settings_domain: redmine.example.com
+    - redmine_smtp_settings_user_name: redmine@redmine.example.com
+    - redmine_smtp_settings_password: password
+    - redmine_smtp_settings_enable_starttls_auto: true
+  roles:
+    - geerlingguy.postgresql
+    - buluma.redmine

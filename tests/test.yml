@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    - mysql_databases:
+        - name: redmine
+    - mysql_users:
+        - name: redmine
+          password: password
+          priv: "redmine.*:ALL"
+    - redmine_configure_firewalld: false
+    - centos_base_basic_packages: true
+    - centos_base_enable_epel: true
+  roles:
+    - role: geerlingguy.mysql
+      become: true
+    - role: bngsudheer.centos_base
+    - role: role_under_test

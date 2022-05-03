@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Michael Buluma
+  role_name: redmine
+  namespace: buluma
+  description: Install Redmine on CentOS
+  company: ShadowNet
+  license: license (Apache-2.0)
+  min_ansible_version: 2.12
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: CentOS
+      versions:
+        - all
+    - name: Rockylinux
+      versions:
+        - all
+  galaxy_tags:
+    - development
+    - web
+dependencies: []
