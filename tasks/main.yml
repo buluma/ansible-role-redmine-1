@@ -25,7 +25,7 @@
     - ruby-full
     - ruby-rmagick
     - libapache2-mod-passenger
-    - python-mysqldb
+    - python3-mysqldb
 
 - name: Install Sendmail for Redmine
   apt: pkg={{ item }} state=present update_cache=yes force=yes
