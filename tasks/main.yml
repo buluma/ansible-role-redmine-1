@@ -6,6 +6,10 @@
 # https://github.com/ansible/ansible/issues/27520
 # TODO: TCP Socket with unicorn
 
+- name: install which
+  ansible.builtin.yum:
+    name: which
+
 - name: Check if Ruby is installed
   command: which ruby
   register: ruby_check
