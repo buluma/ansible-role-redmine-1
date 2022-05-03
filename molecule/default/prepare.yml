@@ -87,4 +87,4 @@
 
   roles:
     - role: buluma.bootstrap
-    - role: radamanth.mysql-ansible
+    - role: buluma.mysql
