@@ -88,4 +88,4 @@
   roles:
     - role: buluma.bootstrap
     - role: buluma.mysql
-      mysql_root_passwd: "s3Cur31t4"
+      mysql_root_passwd: "password"
