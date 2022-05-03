@@ -145,15 +145,15 @@
   become: true
   become_user: redmine
 
-# - name: install the gems needed by Redmine via bundler
-#   community.general.bundler:
-#     executable: /home/redmine/bin/bundler
-#     gemfile: "{{ redmine_runtime_directory }}/Gemfile"
-#     chdir: "{{ redmine_runtime_directory }}"
-#   become: true
-#   become_user: redmine
-#   tags:
-#     - skip_ansible_lint
+- name: install the gems needed by Redmine via bundler
+  community.general.bundler:
+    executable: /home/redmine/bin/bundler
+    gemfile: "{{ redmine_runtime_directory }}/Gemfile"
+    chdir: "{{ redmine_runtime_directory }}"
+  become: true
+  become_user: redmine
+  tags:
+    - skip_ansible_lint
 
 - name: stat secret token file
   ansible.builtin.stat:
