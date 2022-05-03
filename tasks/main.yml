@@ -22,7 +22,7 @@
   with_items:
     - apache2
     - software-properties-common
-    - ruby1.9.3
+    - ruby-full
     - ruby-rmagick
     - libapache2-mod-passenger
     - python-mysqldb
@@ -104,11 +104,11 @@
 - name: Enable mod for apache2
   command: a2enmod {{item}}
   with_items:
-  - passenger
-  - rewrite
-  - proxy
-  - proxy_http
-  - ssl
+    - passenger
+    - rewrite
+    - proxy
+    - proxy_http
+    - ssl
 
 - name: Enable Redmine Apache 2 site
   command: a2ensite redmine.conf
