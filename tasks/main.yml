@@ -6,6 +6,16 @@
 # https://github.com/ansible/ansible/issues/27520
 # TODO: TCP Socket with unicorn
 
+- name: Check if Ruby is installed
+  command: which ruby
+  register: ruby_check
+  ignore_errors: yes
+
+- block:
+  - name: Update the system
+    apt: update_cache=true
+  when: ruby_check.rc != 0
+
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:
     default_packages_list:
