@@ -16,7 +16,7 @@
   ignore_errors: yes
 
 - name: check ruby version
-  shell: "ruby --version"
+  command: "ruby --version"
 
 - name: Update the system
   apt: update_cache=true
