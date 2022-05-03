@@ -33,7 +33,6 @@
     - sendmail
 
 # MYSQL
-
 - name: Stop the MySQL service
   service: name=mysql state=stopped
 
@@ -93,14 +92,11 @@
     creates=/etc/apache2/ssl/redmine.key
   when: redmine_self_signed
 
-
-
 - name: Templating apache2.vhost.conf
   template: src={{item.src}} dest={{item.dest}} backup=yes
   with_items:
   - {src: redmine.conf , dest: '/etc/apache2/sites-available/redmine.conf'}
   - {src: redmine-redirect.conf , dest: '/etc/apache2/sites-available/redmine-redirect.conf'}
-
 
 - name: Enablee security.conf
   command: a2enconf security

@@ -17,5 +17,5 @@ skip_list:  # or 'skip_list' to silence them completely
   - var-spacing  # Variables should have spaces before and after: {{ var_name }}.
   - yaml
   # - deprecated-command-syntax  # Using command rather than an argument to e.g. file
-  # - meta-no-tags  # Tags must contain lowercase letters and digits only
-  # - risky-shell-pipe  # Shells that use pipes should set the pipefail option
+  - meta-no-tags  # Tags must contain lowercase letters and digits only
+  - risky-shell-pipe  # Shells that use pipes should set the pipefail option
