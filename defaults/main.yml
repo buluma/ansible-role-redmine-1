@@ -9,13 +9,13 @@ redmine_db_name: redmine_yourcompany
 # The default admin user that will be set on your redmine installation
 redmine_admin_login: admin
 redmine_admin_passwd: "redmine"
-redmine_admin_mail: youradmin@yourdomain.com 
+redmine_admin_mail: youradmin@yourdomain.com
 
 # Mail that will be set on the from field whend Redmine send notificaitons
 redmine_mail_from: yourmailfrom@yourdomain.com
 
 redmine_domain: "redmine.yourdomain.com"
-# You could also use a domain set in your inventory file, 
+# You could also use a domain set in your inventory file,
 # ex : redmine_domain: "{{ hostvars[groups['redmine_server'][0]]['red_domain'] }}"
 # will use the red_domain property of the first host defined in a group remdine_server
 
@@ -25,7 +25,6 @@ redmine_self_signed_cert_subj: "/C=FR/ST=France/L=Toulouse/O=IT/CN={{redmine_dom
 
 # SSL certifacte path
 redmine_ssl_dir: "/etc/ssl"
-redmine_ssl_pem_path: "{{redmine_ssl_dir}}/redmine.pem" 
+redmine_ssl_pem_path: "{{redmine_ssl_dir}}/redmine.pem"
 redmine_ssl_privkey_path: "{{redmine_ssl_dir}}/redmine.priv"
-redmine_ssl_chain_path:  "{{redmine_ssl_dir}}/redmine.chain" 
-
+redmine_ssl_chain_path: "{{redmine_ssl_dir}}/redmine.chain" 

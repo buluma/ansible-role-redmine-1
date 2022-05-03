@@ -10,6 +10,10 @@ rules:
     level: error
   line-length: disable
   truthy: disable
+  indentation: disable
+  trailing-spaces: disable
+  commas: disable
+  empty-lines: disable
 
 ignore: |
   .tox/

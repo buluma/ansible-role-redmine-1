@@ -1,3 +1,4 @@
+---
 # Redmine - project management software
 # Copyright (C) 2006-2013  Jean-Philippe Lang
 #
@@ -90,12 +91,12 @@ diff_max_lines_displayed:
 enabled_scm:
   serialized: true
   default:
-  - Subversion
-  - Darcs
-  - Mercurial
-  - Cvs
-  - Bazaar
-  - Git
+    - Subversion
+    - Darcs
+    - Mercurial
+    - Cvs
+    - Bazaar
+    - Git
 autofetch_changesets:
   default: 1
 sys_api_enabled:
@@ -179,7 +180,7 @@ default_projects_modules:
   - gantt
 default_projects_tracker_ids:
   serialized: true
-  default: 
+  default:
 # Role given to a non-admin user who creates a project
 new_project_user_role_id:
   format: int
