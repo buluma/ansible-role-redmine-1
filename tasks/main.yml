@@ -40,10 +40,10 @@
   service: name=mysql state=started
 
 - name: Create your database for redmine installation.
-  mysql_db: name={{redmine_db_name}}  login_user=root login_password={{mysql_root_passwd}} state=present
+  mysql_db: name={{redmine_db_name}}  login_user=redmine login_password={{mysql_root_passwd}} state=present
 
 - name: Create redmine database users and grant access to redmine_db_name
-  mysql_user: name="{{redmine_db_login}}" host={{item}}  password="{{redmine_db_passwd }}" login_user="root"  login_password={{mysql_root_passwd}} priv="{{redmine_db_name}}.*:ALL" state=present
+  mysql_user: name="{{redmine_db_login}}" host={{item}}  password="{{redmine_db_passwd }}" login_user="redmine"  login_password={{mysql_root_passwd}} priv="{{redmine_db_name}}.*:ALL" state=present
   with_items:
     - 127.0.0.1
     - ::1

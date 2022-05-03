@@ -4,7 +4,7 @@ redmine_db_login: redmine
 # Password of redmine_db_login
 redmine_db_passwd: "password"
 # Database name for redmine
-redmine_db_name: redmine_yourcompany
+redmine_db_name: redmine
 
 mysql_root_passwd: "password"
 # The default admin user that will be set on your redmine installation
