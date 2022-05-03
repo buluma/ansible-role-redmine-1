@@ -1,7 +1,7 @@
 ---
 roles:
   - name: buluma.bootstrap
-  # - name: buluma.postgresql
+  - name: buluma.ruby
   - name: buluma.mysql
 collections:
   - name: community.general
