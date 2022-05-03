@@ -6,16 +6,16 @@
   command: "sudo echo redmine redmine/instances/default/mysql/admin-pass password {{mysql_root_passwd}} | sudo /usr/bin/debconf-set-selections"
 
 - name: Redmine |set Debocnf vars redmine/instances/default/db/app-user
-  shell: "set -o pipefail ; sudo echo redmine redmine/instances/default/db/app-user    string  {{redmine_db_login}} | sudo /usr/bin/debconf-set-selections"
+  command: "sudo echo redmine redmine/instances/default/db/app-user    string  {{redmine_db_login}} | sudo /usr/bin/debconf-set-selections"
 
 - name: Redmine | Set debconf vars  redmine app-pass passwd
-  shell: "set -o pipefail ;sudo echo redmine redmine/instances/default/mysql/app-pass password {{redmine_db_passwd}} | sudo /usr/bin/debconf-set-selections"
+  command: "sudo echo redmine redmine/instances/default/mysql/app-pass password {{redmine_db_passwd}} | sudo /usr/bin/debconf-set-selections"
 
 - name: Redmine | Set debconf vars redmine db types
-  shell: "set -o pipefail ;sudo echo redmine redmine/instances/default/database-type select mysql | sudo /usr/bin/debconf-set-selections"
+  command: "sudo echo redmine redmine/instances/default/database-type select mysql | sudo /usr/bin/debconf-set-selections"
 
 - name: Redmine | Set debconf vars  redmine db name
-  shell: "set -o pipefail ;sudo echo redmine redmine/instances/default/db/dbname  string  {{redmine_db_name}} | sudo /usr/bin/debconf-set-selections"
+  command: "sudo echo redmine redmine/instances/default/db/dbname  string  {{redmine_db_name}} | sudo /usr/bin/debconf-set-selections"
 
 - name: Install Redmine dependencies for mysql
   apt: name={{item}} state=installed
