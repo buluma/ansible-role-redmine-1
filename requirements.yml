@@ -5,6 +5,7 @@ roles:
   - name: buluma.centos_base
   - name: buluma.ruby
   - name: buluma.mysql
+  - name: buluma.nginx
   # - name: buluma.postgresql
 collections:
   - name: community.general
