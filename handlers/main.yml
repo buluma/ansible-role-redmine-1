@@ -7,7 +7,7 @@
   become: True
 
 - name: restart redmine
-  service:
+  ansible.builtin.systemd:
     # name: "{{app.value.redmine.user.user}}-redmine.service"
     name: "redmine.service"
     state: restarted
