@@ -74,8 +74,8 @@
     group: www-data
     mode: '0644'
 
-- name: Change admin default account
-  shell: chdir="/usr/share/redmine" ruby script/rails runner -e production 'user = User.find(:first, :conditions => {:admin => true}) ; user.mail="{{redmine_admin_mail}}"; user.salt_password("{{redmine_admin_passwd}}"); user.save!'
+# - name: Change admin default account
+#   shell: chdir="/usr/share/redmine" ruby script/rails runner -e production 'user = User.find(:first, :conditions => {:admin => true}) ; user.mail="{{redmine_admin_mail}}"; user.salt_password("{{redmine_admin_passwd}}"); user.save!'
 
 - name: template redmine setting.yml
   template: src=settings.yml dest=/usr/share/redmine/config/settings.yml backup=yes
