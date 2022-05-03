@@ -3,7 +3,7 @@
   - name: create directory
     file:
       # path: "/app/{{app.value.redmine.user.user}}/{{item}}"
-      path: "/app/root/{{item}}"
+      path: "/app/{{item}}"
       state: directory
       owner: 999  # polkitd # temporary hardcoded for my image
       group: 999  # input #temporary hardcoded for my image
@@ -15,7 +15,7 @@
     template:
       src: redmine.service
       # dest: "/etc/systemd/system/{{app.value.redmine.user.user}}-redmine.service"
-      dest: "/etc/systemd/system/root-redmine.service"
+      dest: "/etc/systemd/system/redmine.service"
     notify:
       - daemon reload
       - restart redmine
@@ -30,7 +30,7 @@
           bare: True
           repo: "{{item.url}}"
           # dest: "/app/{{app.value.redmine.user.user}}/repos/{{item.name}}"
-          dest: "/app/root/repos/{{item.name}}"
+          dest: "/app/repos/{{item.name}}"
         loop: "{{app.value.redmine.configs.repos}}"
       - name: update repos in cron
         cron:

@@ -10,10 +10,6 @@
     - centos_base_firewalld: true
     - ruby_version: 2.3
     - ruby_install_globally: true
-  roles:
-    # - buluma.centos_base
-    # - bngsudheer.ruby
-    # - buluma.ruby
 
 - name: Converge
   hosts: all
