@@ -7,3 +7,4 @@
   roles:
     - role: buluma.bootstrap
     - role: buluma.epel
+    - role: bngsudheer.centos_base

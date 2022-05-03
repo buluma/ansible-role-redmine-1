@@ -11,9 +11,6 @@ galaxy_info:
     - name: EL
       versions:
         - 7
-    - name: CentOS
-      versions:
-        - all
   galaxy_tags:
     - development
     - web
