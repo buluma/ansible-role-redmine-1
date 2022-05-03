@@ -87,5 +87,3 @@
 
   roles:
     - role: buluma.bootstrap
-    - role: buluma.mysql
-      mysql_root_passwd: "password"
