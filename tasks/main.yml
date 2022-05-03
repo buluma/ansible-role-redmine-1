@@ -15,6 +15,9 @@
   register: ruby_check
   ignore_errors: yes
 
+- name: check ruby version
+  shell: "ruby --version"
+
 - name: Update the system
   apt: update_cache=true
   when: ruby_check.rc != 0
