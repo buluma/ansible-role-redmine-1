@@ -23,10 +23,7 @@
   when: ruby_check.rc != 0
 
 - name: Install version 2.5.1 of ruby
-  community.general.gem:
-    name: ruby
-    version: 2.5.1
-    state: present
+  command: rvm install 2.5.0
 
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:
