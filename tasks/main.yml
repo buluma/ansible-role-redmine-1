@@ -3,7 +3,7 @@
   apt: name="software-properties-common" update_cache=yes state=present
 
 - name: Redmine | Set debconf vars  redmine root passwd
-  shell: "set -o pipefail ; sudo echo redmine redmine/instances/default/mysql/admin-pass password {{mysql_root_passwd}} | sudo /usr/bin/debconf-set-selections"
+  command: "sudo echo redmine redmine/instances/default/mysql/admin-pass password {{mysql_root_passwd}} | sudo /usr/bin/debconf-set-selections"
 
 - name: Redmine |set Debocnf vars redmine/instances/default/db/app-user
   shell: "set -o pipefail ; sudo echo redmine redmine/instances/default/db/app-user    string  {{redmine_db_login}} | sudo /usr/bin/debconf-set-selections"
