@@ -12,8 +12,8 @@
     - ruby_install_globally: true
   roles:
     # - buluma.centos_base
-    # - bngsudheer.ruby
-    - buluma.ruby
+    - bngsudheer.ruby
+    # - buluma.ruby
 
 - name: Converge
   hosts: all
