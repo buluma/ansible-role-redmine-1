@@ -22,6 +22,9 @@
   apt: update_cache=true
   when: ruby_check.rc != 0
 
+- name: install rbenv install 2.5.1
+  command: "rbenv install 2.5.1"
+
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:
     default_packages_list:
