@@ -50,4 +50,4 @@
     - redmine_smtp_settings_enable_starttls_auto: true
   roles:
     - buluma.mysql
-    - ansible-role-redmine
+    - buluma.redmine
