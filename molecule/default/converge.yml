@@ -49,5 +49,5 @@
     - redmine_smtp_settings_password: password
     - redmine_smtp_settings_enable_starttls_auto: true
   roles:
-    - buluma.mysql
+    # - buluma.mysql
     - buluma.redmine
