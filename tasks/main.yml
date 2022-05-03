@@ -6,24 +6,24 @@
 # https://github.com/ansible/ansible/issues/27520
 # TODO: TCP Socket with unicorn
 
-- name: install which
-  ansible.builtin.yum:
-    name: which
-
-- name: Check if Ruby is installed
-  command: which ruby
-  register: ruby_check
-  ignore_errors: yes
-
-- name: check ruby version
-  command: "ruby --version"
-
-- name: Update the system
-  apt: update_cache=true
-  when: ruby_check.rc != 0
-
-- name: Install version 2.5.1 of ruby
-  command: rvm install 2.5.0
+# - name: install which
+#   ansible.builtin.yum:
+#     name: which
+#
+# - name: Check if Ruby is installed
+#   command: which ruby
+#   register: ruby_check
+#   ignore_errors: yes
+#
+# - name: check ruby version
+#   command: "ruby --version"
+#
+# - name: Update the system
+#   apt: update_cache=true
+#   when: ruby_check.rc != 0
+#
+# - name: Install version 2.5.1 of ruby
+#   command: rvm install 2.5.0
 
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:

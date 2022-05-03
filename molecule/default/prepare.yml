@@ -3,11 +3,13 @@
   hosts: all
   become: yes
   gather_facts: no
+  vars:
+    ruby_version: 2.5
 
   roles:
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.centos_base
-    - role: buluma.ruby
+    - role: bngsudheer.ruby
     - role: buluma.nginx
     # - role: buluma.mysql

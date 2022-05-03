@@ -3,7 +3,7 @@ roles:
   - name: buluma.bootstrap
   - name: buluma.epel
   - name: buluma.centos_base
-  - name: buluma.ruby
+  - name: bngsudheer.ruby
   - name: buluma.mysql
   - name: buluma.nginx
   # - name: buluma.postgresql
