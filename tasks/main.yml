@@ -56,7 +56,7 @@
   service: name=mysql state=started
 
 - name: Install redmine
-  apt: name={{item}} state=installed
+  apt: name={{item}} state=present
   with_items:
   - redmine
   - redmine-mysql
