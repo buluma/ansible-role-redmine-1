@@ -148,8 +148,8 @@
 - name: install mimemagic
   shell: "set -o pipefail ; gem install mimemagic -v '0.4.3'"
   register: mimemagic
-  changed_when: no
-  failed_when: no
+  # changed_when: no
+  # failed_when: no
 
 - name: install the gems needed by Redmine via bundler
   community.general.bundler:
