@@ -24,6 +24,10 @@ molecule:
         tag: "latest"
       - image: "centos-systemd"
         tag: "systemd"
+      - image: "centos"
+        tag: "centos8"
+      - image: "centos"
+        tag: "centos7"
 
 testing:
   stage: test
@@ -43,6 +47,10 @@ testing:
         tag: "latest"
       - image: "centos-systemd"
         tag: "systemd"
+      - image: "centos"
+        tag: "centos8"
+      - image: "centos"
+        tag: "centos7"
 
 galaxy:
   stage: deploy
