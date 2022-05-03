@@ -12,3 +12,7 @@ skip_list:  # or 'skip_list' to silence them completely
   - fqcn-builtins  # Use FQCN for builtin actions.
   - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern
   - no-changed-when  # Commands should not change things if nothing needs doing
+  - git-latest  # Git checkouts must contain explicit version.
+  - unnamed-task  # All tasks should be named.
+  - var-spacing  # Variables should have spaces before and after: {{ var_name }}.
+  - yaml

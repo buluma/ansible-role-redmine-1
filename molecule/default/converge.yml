@@ -12,7 +12,7 @@
     - ruby_install_globally: true
   roles:
     # - buluma.centos_base
-    - bngsudheer.ruby
+    # - bngsudheer.ruby
     # - buluma.ruby
 
 - name: Converge
