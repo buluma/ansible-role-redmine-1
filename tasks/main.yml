@@ -15,10 +15,9 @@
   register: ruby_check
   ignore_errors: yes
 
-- block:
-  - name: Update the system
-    apt: update_cache=true
-  when: ruby_check.rc != 0
+- name: Update the system
+  apt: update_cache=true
+when: ruby_check.rc != 0
 
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:
