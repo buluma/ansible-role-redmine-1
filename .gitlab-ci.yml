@@ -18,6 +18,12 @@ molecule:
     matrix:
       - image: "enterpriselinux"
         tag: "7"
+      - image: "centos-systemd"
+        tag: "7"
+      - image: "centos-systemd"
+        tag: "latest"
+      - image: "centos-systemd"
+        tag: "systemd"
 
 testing:
   stage: test
@@ -31,6 +37,12 @@ testing:
     matrix:
       - image: "enterpriselinux"
         tag: "7"
+      - image: "centos-systemd"
+        tag: "7"
+      - image: "centos-systemd"
+        tag: "latest"
+      - image: "centos-systemd"
+        tag: "systemd"
 
 galaxy:
   stage: deploy
@@ -48,6 +60,12 @@ role_testing:
     matrix:
       - image: "enterpriselinux"
         tag: "7"
+      - image: "centos-systemd"
+        tag: "7"
+      - image: "centos-systemd"
+        tag: "latest"
+      - image: "centos-systemd"
+        tag: "systemd"
 
 release_job:
   stage: .post

@@ -14,9 +14,6 @@ galaxy_info:
     - name: CentOS
       versions:
         - all
-    - name: Rockylinux
-      versions:
-        - all
   galaxy_tags:
     - development
     - web

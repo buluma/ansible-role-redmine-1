@@ -163,7 +163,6 @@ This role has been tested on these [container images](https://hub.docker.com/u/b
 |---------|----|
 |el|7|
 |centos|all|
-|rockylinux|all|
 
 The minimum version of Ansible required is 2.12, tests have been done to:
 
