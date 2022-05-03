@@ -8,3 +8,5 @@
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.centos_base
+    - role: buluma.ruby
+    - role: buluma.mysql
