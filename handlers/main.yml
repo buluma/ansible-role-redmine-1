@@ -1,14 +1,2 @@
 ---
-- name: daemon reload
-  systemd:
-    daemon_reload: yes
-    # name: "{{app.value.redmine.user.user}}-redmine.service"
-    name: "redmine.service"
-  become: True
-
-- name: restart redmine
-  ansible.builtin.systemd:
-    # name: "{{app.value.redmine.user.user}}-redmine.service"
-    name: "redmine.service"
-    state: restarted
-  become: True
+# handlers file for redmine-ansible
