@@ -11,7 +11,7 @@
     - ruby_version: 2.3
     - ruby_install_globally: true
   roles:
-    - bngsudheer.centos_base
+    # - buluma.centos_base
     # - bngsudheer.ruby
     - buluma.ruby
 

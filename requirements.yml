@@ -2,10 +2,10 @@
 roles:
   - name: buluma.bootstrap
   - name: buluma.epel
-  - name: bngsudheer.centos_base
+  - name: buluma.centos_base
   - name: buluma.ruby
   - name: buluma.mysql
-  - name: geerlingguy.postgresql
+  - name: buluma.postgresql
 collections:
   - name: community.general
   - name: ansible.posix
