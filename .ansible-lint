@@ -11,3 +11,4 @@ skip_list:  # or 'skip_list' to silence them completely
   - experimental  # all rules tagged as experimental
   - fqcn-builtins  # Use FQCN for builtin actions.
   - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern
+  - no-changed-when  # Commands should not change things if nothing needs doing
