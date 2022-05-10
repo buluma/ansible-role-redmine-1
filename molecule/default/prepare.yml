@@ -87,4 +87,5 @@
 
   roles:
     - role: buluma.bootstrap
+    - role: buluma.centos_base
     - role: buluma.ruby
