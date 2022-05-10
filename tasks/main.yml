@@ -1,6 +1,7 @@
 ---
 - name: Apt-get update
   apt: name="software-properties-common" update_cache=yes state=present
+  when: ansible_os_family | lower == "debian"
 
 - name: Redmine | Set debconf vars  redmine root passwd
   command: "sudo echo redmine redmine/instances/default/mysql/admin-pass password {{mysql_root_passwd}} | sudo /usr/bin/debconf-set-selections"
