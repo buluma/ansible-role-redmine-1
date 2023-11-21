@@ -5,4 +5,4 @@
 repository:
   description: Install Redmine on CentOS
   homepage: https://buluma.github.io/
-  topics: development, web, ansible, molecule, tox, playbook, hacktoberfest
+  topics: development, web, ansible, molecule, tox, playbook

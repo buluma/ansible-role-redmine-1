@@ -1,14 +1,15 @@
-# [redmine](#redmine)
+# [Ansible role redmine-1](#redmine-1)
 
 Install Redmine on CentOS
 
-|GitHub|GitLab|Quality|Downloads|Version|Issues|Pull Requests|
-|------|------|-------|---------|-------|------|-------------|
-|[![github](https://github.com/buluma/ansible-role-redmine/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-redmine/actions)|[![gitlab](https://gitlab.com/buluma/ansible-role-redmine/badges/master/pipeline.svg)](https://gitlab.com/buluma/ansible-role-redmine)|[![quality](https://img.shields.io/ansible/quality/)](https://galaxy.ansible.com/buluma/redmine)|[![downloads](https://img.shields.io/ansible/role/d/)](https://galaxy.ansible.com/buluma/redmine)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-redmine.svg)](https://github.com/buluma/ansible-role-redmine/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-redmine.svg)](https://github.com/buluma/ansible-role-redmine/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-redmine.svg)](https://github.com/buluma/ansible-role-redmine/pulls/)|
+|GitHub|GitLab|Downloads|Version|Issues|Pull Requests|
+|------|------|-------|-------|------|-------------|
+|[![github](https://github.com/buluma/ansible-role-redmine-1/actions/workflows/molecule.yml/badge.svg)](https://github.com/buluma/ansible-role-redmine-1/actions/workflows/molecule.yml)|[![gitlab](https://gitlab.com/shadowwalker/ansible-role-redmine-1/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-redmine-1)|[![downloads](https://img.shields.io/ansible/role/d/)](https://galaxy.ansible.com/buluma/redmine-1)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-redmine-1.svg)](https://github.com/buluma/ansible-role-redmine-1/releases/)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-redmine-1.svg)](https://github.com/buluma/ansible-role-redmine-1/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-redmine-1.svg)](https://github.com/buluma/ansible-role-redmine-1/pulls/)|
 
 ## [Example Playbook](#example-playbook)
 
-This example is taken from `molecule/default/converge.yml` and is tested on each push, pull request and release.
+This example is taken from [`molecule/default/converge.yml`](https://github.com/buluma/ansible-role-redmine-1/blob/master/molecule/default/converge.yml) and is tested on each push, pull request and release.
+
 ```yaml
 ---
 - name: Converge
@@ -23,9 +24,9 @@ This example is taken from `molecule/default/converge.yml` and is tested on each
     - ruby_version: 2.3
     - ruby_install_globally: true
   roles:
-    # - bngsudheer.centos_base
-    # - bngsudheer.ruby
-    - buluma.ruby
+    # - buluma.centos_base
+    - bngsudheer.ruby
+    # - buluma.ruby
 
 - name: Converge
   hosts: all
@@ -61,27 +62,123 @@ This example is taken from `molecule/default/converge.yml` and is tested on each
     - redmine_smtp_settings_password: password
     - redmine_smtp_settings_enable_starttls_auto: true
   roles:
-    - buluma.mysql
+    # - buluma.mysql
     - buluma.redmine
 ```
 
-The machine needs to be prepared. In CI this is done using `molecule/default/prepare.yml`:
+The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-redmine-1/blob/master/molecule/default/prepare.yml):
+
 ```yaml
 ---
 - name: prepare
   hosts: all
   become: yes
   gather_facts: no
+  vars:
+    ruby_version: 2.5
+
+  tasks:
+    # prepare
+    - name: cp -rfT /etc/skel /root
+      ansible.builtin.raw: |
+        set -eu
+        cp -rfT /etc/skel /root
+      changed_when: false
+      failed_when: false
+
+    - name: setenforce 0
+      ansible.builtin.raw: |
+        set -eu
+        setenforce 0
+        sed -i 's/^SELINUX=.*$/SELINUX=permissive/g' /etc/selinux/config
+      changed_when: false
+      failed_when: false
+
+    - name: systemctl stop firewalld.service
+      ansible.builtin.raw: |
+        set -eu
+        systemctl stop firewalld.service
+        systemctl disable firewalld.service
+      changed_when: false
+      failed_when: false
+
+    - name: systemctl stop ufw.service
+      ansible.builtin.raw: |
+        set -eu
+        systemctl stop ufw.service
+        systemctl disable ufw.service
+      changed_when: false
+      failed_when: false
+
+    - name: debian | apt-get install *.deb
+      ansible.builtin.raw: |
+        set -eu
+        DEBIAN_FRONTEND=noninteractive apt-get install -y bzip2 ca-certificates curl gcc gnupg gzip hostname iproute2 passwd procps python3 python3-apt python3-jmespath python3-lxml python3-pip python3-setuptools python3-venv python3-virtualenv python3-wheel rsync sudo tar unzip util-linux xz-utils zip
+      when: ansible_os_family | lower == "debian"
+      changed_when: false
+      failed_when: false
+
+    - name: fedora | yum install *.rpm
+      ansible.builtin.raw: |
+        set -eu
+        yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-dnf-plugin-versionlock python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-utils zip
+      when: ansible_distribution | lower == "fedora"
+      changed_when: false
+      failed_when: false
+
+    - name: redhat-9 | yum install *.rpm
+      ansible.builtin.raw: |
+        set -eu
+        yum-config-manager --enable crb || echo $?
+        yum-config-manager --enable codeready-builder-beta-for-rhel-9-x86_64-rpms || echo $?
+        yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+        yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-dnf-plugin-versionlock python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-utils zip
+      when: ansible_os_family | lower == "redhat" and ansible_distribution_major_version | lower == "9"
+      changed_when: false
+      failed_when: false
+
+    - name: redhat-8 | yum install *.rpm
+      ansible.builtin.raw: |
+        set -eu
+        yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+        yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-dnf-plugin-versionlock python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-utils zip
+      when: ansible_os_family | lower == "redhat" and ansible_distribution_major_version | lower == "8"
+      changed_when: false
+      failed_when: false
+
+    - name: redhat-7 | yum install *.rpm
+      ansible.builtin.raw: |
+        set -eu
+        subscription-manager repos --enable=rhel-7-server-optional-rpms || echo $?
+        yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-plugin-versionlock yum-utils zip
+      when: ansible_os_family | lower == "redhat" and ansible_distribution_major_version | lower == "7"
+      changed_when: false
+      failed_when: false
+
+    - name: suse | zypper -n install *.rpm
+      ansible.builtin.raw: |
+        set -eu
+        zypper -n install -y bzip2 ca-certificates curl gcc gpg2 gzip hostname iproute2 procps python3 python3-jmespath python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow sudo tar unzip util-linux xz zip
+      when: ansible_os_family | lower == "suse"
+      changed_when: false
+      failed_when: false
 
   roles:
     - role: buluma.bootstrap
     - role: buluma.epel
+    - role: buluma.centos_base
+    - role: bngsudheer.ruby
+    - role: buluma.nginx
+    # - role: buluma.mysql
 ```
 
+Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
 
 ## [Role Variables](#role-variables)
 
-The default values for the variables are set in `defaults/main.yml`:
+The default values for the variables are set in [`defaults/main.yml`](https://github.com/buluma/ansible-role-redmine-1/blob/master/defaults/main.yml):
+
 ```yaml
 ---
 # defaults file for ansible-role-redmine
@@ -132,20 +229,20 @@ redmine_nginx_allowlist_path: ''
 
 ## [Requirements](#requirements)
 
-- pip packages listed in [requirements.txt](https://github.com/buluma/ansible-role-redmine/blob/main/requirements.txt).
+- pip packages listed in [requirements.txt](https://github.com/buluma/ansible-role-redmine-1/blob/master/requirements.txt).
 
-## [Status of used roles](#status-of-requirements)
+## [State of used roles](#state-of-used-roles)
 
 The following roles are used to prepare a system. You can prepare your system in another way.
 
 | Requirement | GitHub | GitLab |
 |-------------|--------|--------|
-|[buluma.bootstrap](https://galaxy.ansible.com/buluma/bootstrap)|[![Build Status GitHub](https://github.com/buluma/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-bootstrap/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/ansible-role-bootstrap/badges/master/pipeline.svg)](https://gitlab.com/buluma/ansible-role-bootstrap)|
-|[buluma.epel](https://galaxy.ansible.com/buluma/epel)|[![Build Status GitHub](https://github.com/buluma/ansible-role-epel/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-epel/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/ansible-role-epel/badges/master/pipeline.svg)](https://gitlab.com/buluma/ansible-role-epel)|
-|[bngsudheer.centos_base](https://galaxy.ansible.com/buluma/bngsudheer.centos_base)|[![Build Status GitHub](https://github.com/buluma/bngsudheer.centos_base/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/bngsudheer.centos_base/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/bngsudheer.centos_base/badges/master/pipeline.svg)](https://gitlab.com/buluma/bngsudheer.centos_base)|
-|[buluma.ruby](https://galaxy.ansible.com/buluma/ruby)|[![Build Status GitHub](https://github.com/buluma/ansible-role-ruby/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-ruby/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/ansible-role-ruby/badges/master/pipeline.svg)](https://gitlab.com/buluma/ansible-role-ruby)|
-|[buluma.mysql](https://galaxy.ansible.com/buluma/mysql)|[![Build Status GitHub](https://github.com/buluma/ansible-role-mysql/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-mysql/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/ansible-role-mysql/badges/master/pipeline.svg)](https://gitlab.com/buluma/ansible-role-mysql)|
-|[geerlingguy.postgresql](https://galaxy.ansible.com/buluma/geerlingguy.postgresql)|[![Build Status GitHub](https://github.com/buluma/geerlingguy.postgresql/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/geerlingguy.postgresql/actions)|[![Build Status GitLab ](https://gitlab.com/buluma/geerlingguy.postgresql/badges/master/pipeline.svg)](https://gitlab.com/buluma/geerlingguy.postgresql)|
+|[buluma.bootstrap](https://galaxy.ansible.com/buluma/bootstrap)|[![Build Status GitHub](https://github.com/buluma/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-bootstrap/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-bootstrap/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-bootstrap)|
+|[buluma.epel](https://galaxy.ansible.com/buluma/epel)|[![Build Status GitHub](https://github.com/buluma/ansible-role-epel/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-epel/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-epel/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-epel)|
+|[buluma.centos_base](https://galaxy.ansible.com/buluma/centos_base)|[![Build Status GitHub](https://github.com/buluma/ansible-role-centos_base/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-centos_base/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-centos_base/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-centos_base)|
+|[bngsudheer.ruby](https://galaxy.ansible.com/buluma/bngsudheer.ruby)|[![Build Status GitHub](https://github.com/buluma/bngsudheer.ruby/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/bngsudheer.ruby/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/bngsudheer.ruby/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/bngsudheer.ruby)|
+|[buluma.mysql](https://galaxy.ansible.com/buluma/mysql)|[![Build Status GitHub](https://github.com/buluma/ansible-role-mysql/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-mysql/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-mysql/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-mysql)|
+|[buluma.nginx](https://galaxy.ansible.com/buluma/nginx)|[![Build Status GitHub](https://github.com/buluma/ansible-role-nginx/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-nginx/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-nginx/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-nginx)|
 
 ## [Context](#context)
 
@@ -153,7 +250,7 @@ This role is a part of many compatible roles. Have a look at [the documentation 
 
 Here is an overview of related roles:
 
-![dependencies](https://raw.githubusercontent.com/buluma/ansible-role-redmine/png/requirements.png "Dependencies")
+![dependencies](https://raw.githubusercontent.com/buluma/ansible-role-redmine-1/png/requirements.png "Dependencies")
 
 ## [Compatibility](#compatibility)
 
@@ -161,8 +258,7 @@ This role has been tested on these [container images](https://hub.docker.com/u/b
 
 |container|tags|
 |---------|----|
-|el|7|
-|centos|all|
+|[EL](https://hub.docker.com/repository/docker/buluma/enterpriselinux/general)|7|
 
 The minimum version of Ansible required is 2.12, tests have been done to:
 
@@ -170,18 +266,22 @@ The minimum version of Ansible required is 2.12, tests have been done to:
 - The current version.
 - The development version.
 
-
-
-If you find issues, please register them in [GitHub](https://github.com/buluma/ansible-role-redmine/issues)
+If you find issues, please register them in [GitHub](https://github.com/buluma/ansible-role-redmine-1/issues)
 
 ## [Changelog](#changelog)
 
-[Role History](https://github.com/buluma/ansible-role-redmine/blob/master/CHANGELOG.md)
+[Role History](https://github.com/buluma/ansible-role-redmine-1/blob/master/CHANGELOG.md)
 
 ## [License](#license)
 
-license (Apache-2.0)
+[license (Apache-2.0)](https://github.com/buluma/ansible-role-redmine-1/blob/master/LICENSE).
 
 ## [Author Information](#author-information)
 
 [Michael Buluma](https://buluma.github.io/)
+
+Please consider [sponsoring me](https://github.com/sponsors/buluma).
+
+### [Special Thanks](#special-thanks)
+
+Template inspired by [Robert de Bock](https://github.com/robertdebock)

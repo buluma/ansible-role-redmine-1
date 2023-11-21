@@ -2,13 +2,14 @@
 #
 # Ansible managed
 #
-exclude_list:
-  - ./molecule/default/collections.yml
-  - ./.tox
-  - ./.cache
+  - molecule/default/collections.yml
+  - .tox
+  - .cache
+  - .github
+  - requirements.yml
 
-skip_list:  # or 'skip_list' to silence them completely
-  - experimental  # all rules tagged as experimental
-  - fqcn-builtins  # Use FQCN for builtin actions.
-  - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern
-  - no-changed-when  # Commands should not change things if nothing needs doing
+skip_list:
+  - yaml[truthy]
+
+enable_list:
+  - name[prefix]
