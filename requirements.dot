@@ -1,0 +1,19 @@
+digraph PhiloDilemma {
+  label = "Michael Buluma" ;
+  overlap=false
+  {
+    "redmine" [fillcolor=yellow style=filled penwidth=3]
+    "buluma.bootstrap" [fillcolor=green style=filled]
+    "buluma.epel" [fillcolor=green style=filled]
+    "buluma.centos_base" [fillcolor=green style=filled]
+    "bngsudheer.ruby" [fillcolor=green style=filled]
+    "buluma.mysql" [fillcolor=green style=filled]
+    "buluma.nginx" [fillcolor=green style=filled]
+  }
+  "redmine" -> "buluma.bootstrap"
+  "redmine" -> "buluma.epel"
+  "redmine" -> "buluma.centos_base"
+  "redmine" -> "bngsudheer.ruby"
+  "redmine" -> "buluma.mysql"
+  "redmine" -> "buluma.nginx"
+}
