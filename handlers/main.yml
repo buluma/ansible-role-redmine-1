@@ -1,28 +1,28 @@
 ---
-- name: firewalld reload
-  ansible.builtin.service:
-    name: firewalld
-    state: reloaded
+  - name: firewalld reload
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
 
-- name: firewalld restart
-  ansible.builtin.service:
-    name: firewalld
-    state: restarted
+  - name: firewalld restart
+    ansible.builtin.service:
+      name: firewalld
+      state: restarted
 
-- name: nginx reload
-  ansible.builtin.service:
-    name: nginx
-    state: reloaded
+  - name: nginx reload
+    ansible.builtin.service:
+      name: nginx
+      state: reloaded
 
-- name: nginx restart
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
+  - name: nginx restart
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
 
-- name: redmine restart
-  ansible.builtin.service:
-    name: redmine
-    state: restarted
+  - name: redmine restart
+    ansible.builtin.service:
+      name: redmine
+      state: restarted
 
 # TODO environment variables not working in handler
 # - name: plugins migrate
@@ -36,14 +36,14 @@
 #   tags:
 #       - skip_ansible_lint
 
-- name: creates db migration
-  ansible.builtin.file:
-    path: /home/redmine/.ansible-creates-db-migrate
-    state: touch
+  - name: creates db migration
+    ansible.builtin.file:
+      path: /home/redmine/.ansible-creates-db-migrate
+      state: touch
 
-- name: creates default data
-  ansible.builtin.file:
-    path: /home/redmine/.ansible-creates-default-data
-    state: touch
-    owner: redmine
-    group: redmine
+  - name: creates default data
+    ansible.builtin.file:
+      path: /home/redmine/.ansible-creates-default-data
+      state: touch
+      owner: redmine
+      group: redmine
