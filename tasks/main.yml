@@ -28,14 +28,14 @@
 - name: default list of pacakages to be installed
   ansible.builtin.set_fact:
     default_packages_list:
-    - ruby-devel
-    - ImageMagick
-    - ImageMagick-devel
-    - ImageMagick-c++-devel
-    - gcc
-    - patch
-    - epel-release
-    - which
+      - ruby-devel
+      - ImageMagick
+      - ImageMagick-devel
+      - ImageMagick-c++-devel
+      - gcc
+      - patch
+      - epel-release
+      - which
 
 - name: install required packages
   ansible.builtin.set_fact:
@@ -71,7 +71,7 @@
   register: redmine_cat
 
 - name: download redmine
-  ansible.builtin.get_url: url=http://www.redmine.org/releases/redmine-{{ 
+  ansible.builtin.get_url: url=http://www.redmine.org/releases/redmine-{{
     redmine_version }}.tar.gz dest=/home/redmine/
   become: true
   become_user: redmine
@@ -97,7 +97,7 @@
 # TODO probably change redmine path to /sr/redmine instead of /home/redmine/redmine
 - name: allow Nginx to read redmine content
   community.general.sefcontext:
-    target: '/home/redmine/redmine/public(/.*)?'
+    target: "/home/redmine/redmine/public(/.*)?"
     setype: httpd_sys_content_t
     state: present
   when: redmine_configure_selinux
@@ -115,7 +115,8 @@
   when: not redmine_cat.stat.exists
 
 - name: copy Redmine source files to runtime directory
-  shell: "cp -a /home/redmine/redmine-{{ redmine_version }}/* {{ redmine_runtime_directory
+  shell:
+    "cp -a /home/redmine/redmine-{{ redmine_version }}/* {{ redmine_runtime_directory
     }}"
   become: true
   become_user: redmine
@@ -135,7 +136,7 @@
   ansible.builtin.template:
     src: database.yml
     dest: "{{ redmine_runtime_directory }}/config/"
-    mode: '0755'
+    mode: "0755"
   become: true
   become_user: redmine
 
@@ -143,7 +144,7 @@
   ansible.builtin.template:
     src: home/redmine/redmine/config/configuration.yml.j2
     dest: "{{ redmine_runtime_directory }}/config/configuration.yml"
-    mode: '0755'
+    mode: "0755"
   become: true
   become_user: redmine
   when: redmine_additional_configuration
@@ -152,7 +153,7 @@
   ansible.builtin.template:
     src: Gemfile.local
     dest: "{{ redmine_runtime_directory }}"
-    mode: '0755'
+    mode: "0755"
   become: true
   become_user: redmine
 
@@ -178,7 +179,7 @@
   become: true
   become_user: redmine
   tags:
-  - skip_ansible_lint
+    - skip_ansible_lint
 
 - name: stat secret token file
   ansible.builtin.stat:
@@ -188,13 +189,13 @@
 - name: generate secret token
   become: true
   become_user: redmine
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake 
+  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake
     generate_secret_token
   args:
     chdir: "{{ redmine_runtime_directory }}"
   when: not secret_token_stat.stat.exists
   tags:
-  - skip_ansible_lint
+    - skip_ansible_lint
 
 - name: migrate database
   environment:
@@ -207,20 +208,20 @@
   become_user: redmine
   register: db_migrate
   notify:
-  - creates db migration
+    - creates db migration
   tags:
-  - skip_ansible_lint
+    - skip_ansible_lint
 
 - name: directories for shared resources
   ansible.builtin.file:
     path: "{{ redmine_runtime_directory }}/shared/{{ item }}"
     state: directory
-    mode: '0755'
+    mode: "0755"
   with_items:
-  - config/redmine
-  - log/redmine
-  - pid/redmine
-  - socket/redmine
+    - config/redmine
+    - log/redmine
+    - pid/redmine
+    - socket/redmine
   become: true
   become_user: redmine
 
@@ -228,7 +229,7 @@
   ansible.builtin.template:
     src: unicorn.conf.rb
     dest: "{{ redmine_runtime_directory }}/shared/config/redmine/"
-    mode: '0755'
+    mode: "0755"
   become: true
   become_user: redmine
 
@@ -236,7 +237,7 @@
   ansible.builtin.template:
     src: usr/lib/systemd/system/redmine.service
     dest: /usr/lib/systemd/system/
-    mode: '0755'
+    mode: "0755"
 
 - name: ensure temp, log and other Redmine directories exist
   ansible.builtin.file:
@@ -244,15 +245,15 @@
     state: directory
     owner: redmine
     group: redmine
-    mode: '0755'
+    mode: "0755"
   with_items:
-  - "tmp/pdf"
-  - "public/plugin_assets"
-  - "files"
-  - "log"
+    - "tmp/pdf"
+    - "public/plugin_assets"
+    - "files"
+    - "log"
 
 - name: populate default data
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake 
+  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake
     redmine:load_default_data
   become: true
   become_user: redmine
@@ -261,9 +262,9 @@
     creates: /home/redmine/.ansible-creates-default-data
   when: redmine_default_data
   notify:
-  - creates default data
+    - creates default data
   tags:
-  - skip_ansible_lint
+    - skip_ansible_lint
   environment:
     REDMINE_LANG: "{{ redmine_language }}"
     RAILS_ENV: production
@@ -275,10 +276,10 @@
     state: enabled
     zone: public
   with_items:
-  - http
-  - https
+    - http
+    - https
   notify:
-  - firewalld restart
+    - firewalld restart
   when: redmine_configure_firewalld
 
 - name: permissions for Nginx to read Redmine files
@@ -287,43 +288,43 @@
     recurse: false
     mode: o+x
   with_items:
-  - /home
-  - /home/redmine
-  - "{{ redmine_runtime_directory }}"
+    - /home
+    - /home/redmine
+    - "{{ redmine_runtime_directory }}"
   when: redmine_configure_nginx
 
 - name: nginx configuration plain
   ansible.builtin.template:
     src: redmine.conf
     dest: /etc/nginx/conf.d/
-    mode: '0755'
+    mode: "0755"
   notify:
-  - nginx restart
+    - nginx restart
   when:
-  - redmine_configure_nginx
-  - redmine_nginx_config_template == "plain"
+    - redmine_configure_nginx
+    - redmine_nginx_config_template == "plain"
 
 - name: nginx configuration TLS
   ansible.builtin.template:
     src: etc/nginx/conf.d/redmine_with_tls.conf
     dest: /etc/nginx/conf.d/redmine.conf
-    mode: '0755'
+    mode: "0755"
   notify:
-  - nginx restart
+    - nginx restart
   when:
-  - redmine_configure_nginx
-  - redmine_nginx_config_template == "tls"
+    - redmine_configure_nginx
+    - redmine_nginx_config_template == "tls"
 
 - name: Nginx configuration custom
   ansible.builtin.template:
     src: "{{ redmine_nginx_custom_config_path }}"
     dest: /etc/nginx/conf.d/redmine.conf
-    mode: '0755'
+    mode: "0755"
   notify:
-  - nginx restart
+    - nginx restart
   when:
-  - redmine_configure_nginx
-  - redmine_nginx_config_template == "custom"
+    - redmine_configure_nginx
+    - redmine_nginx_config_template == "custom"
 
 - name: Enable redmine systemd unit
   ansible.builtin.systemd:
