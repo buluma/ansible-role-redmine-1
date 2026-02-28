@@ -40,12 +40,12 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   - redmine_plugins:
     - name: scrum
       base_name: scrum
-      url: 
+      url:
         https://redmine.ociotec.com/attachments/download/481/scrum-v0.18.1.tar.gz
       create_base_directory: false
     - name: timesheet
       base_name: timesheet
-      url: 
+      url:
         https://github.com/Contargo/redmine-timesheet-plugin/archive/master.zip
       create_base_directory: false
   - mysql_databases:
@@ -135,7 +135,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
       yum-config-manager --enable codeready-builder-beta-for-rhel-9-x86_64-rpms || echo $?
       yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
       yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-dnf-plugin-versionlock python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-utils zip
-    when: ansible_os_family | lower == "redhat" and 
+    when: ansible_os_family | lower == "redhat" and
       ansible_distribution_major_version | lower == "9"
     changed_when: false
     failed_when: false
@@ -145,7 +145,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
       set -eu
       yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
       yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-dnf-plugin-versionlock python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-utils zip
-    when: ansible_os_family | lower == "redhat" and 
+    when: ansible_os_family | lower == "redhat" and
       ansible_distribution_major_version | lower == "8"
     changed_when: false
     failed_when: false
@@ -156,7 +156,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
       subscription-manager repos --enable=rhel-7-server-optional-rpms || echo $?
       yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
       yum install -y bzip2 ca-certificates curl gcc gnupg2 gzip hostname iproute procps-ng python3 python3-jmespath python3-libselinux python3-lxml python3-pip python3-setuptools python3-virtualenv python3-wheel rsync shadow-utils sudo tar unzip util-linux xz yum-plugin-versionlock yum-utils zip
-    when: ansible_os_family | lower == "redhat" and 
+    when: ansible_os_family | lower == "redhat" and
       ansible_distribution_major_version | lower == "7"
     changed_when: false
     failed_when: false
@@ -279,4 +279,3 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 ## [Author Information](#author-information)
 
 [Michael Buluma](https://buluma.github.io/)
-
