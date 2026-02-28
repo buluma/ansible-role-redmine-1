@@ -229,7 +229,7 @@ redmine_language: en
 redmine_ssl_certificate_path: "/etc/letsencrypt/live/{{ redmine_domain_name }}/fullchain.pem"
 redmine_ssl_certificate_key_path: "/etc/letsencrypt/live/{{ redmine_domain_name }}/privkey.pem"
 redmine_nginx_allowlist: false
-redmine_nginx_allowlist_path: ''
+redmine_nginx_allowlist_path: ""
 ```
 
 ## [Requirements](#requirements)
