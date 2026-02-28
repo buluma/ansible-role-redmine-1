@@ -1,25 +1,25 @@
 ---
-- name: firewalld reload
+- name: Firewalld reload
   ansible.builtin.service:
     name: firewalld
     state: reloaded
 
-- name: firewalld restart
+- name: Firewalld restart
   ansible.builtin.service:
     name: firewalld
     state: restarted
 
-- name: nginx reload
+- name: Nginx reload
   ansible.builtin.service:
     name: nginx
     state: reloaded
 
-- name: nginx restart
+- name: Nginx restart
   ansible.builtin.service:
     name: nginx
     state: restarted
 
-- name: redmine restart
+- name: Redmine restart
   ansible.builtin.service:
     name: redmine
     state: restarted
@@ -36,12 +36,12 @@
 #   tags:
 #       - skip_ansible_lint
 
-- name: creates db migration
+- name: Creates db migration
   ansible.builtin.file:
     path: /home/redmine/.ansible-creates-db-migrate
     state: touch
 
-- name: creates default data
+- name: Creates default data
   ansible.builtin.file:
     path: /home/redmine/.ansible-creates-default-data
     state: touch

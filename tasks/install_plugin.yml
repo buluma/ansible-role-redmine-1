@@ -32,14 +32,12 @@
   become_user: redmine
   when: item.create_base_directory
 
-- name: set plugin archvie extraction target path - archive contains base_name
-    root directory
+- name: set plugin archvie extraction target path - archive contains base_name root directory
   ansible.builtin.set_fact:
     plugin_directory: "{{ redmine_runtime_directory }}/plugins/"
   when: not item.create_base_directory
 
-- name: set plugin archvie extraction target path - archive does not contains
-    base_name root directory
+- name: set plugin archvie extraction target path - archive does not contains base_name root directory
   ansible.builtin.set_fact:
     plugin_directory: "{{ redmine_runtime_directory }}/plugins/"
   when: item.create_base_directory
@@ -59,8 +57,8 @@
   become_user: redmine
 
 - name: rename plugin mapping directory
-  command: mv "{{ redmine_runtime_directory }}/plugins/{{ item.map_directory.src
-    }}" "{{ redmine_runtime_directory }}/plugins/{{ item.map_directory.dest }}"
+  ansible.builtin.command: mv "{{ redmine_runtime_directory }}/plugins/{{ item.map_directory.src }}" "{{ redmine_runtime_directory }}/plugins/{{
+    item.map_directory.dest }}"
   args:
     creates: "{{ redmine_runtime_directory }}/.ansible-plugin-{{ item.base_name }}.creates"
   register: mapping_creates
@@ -79,8 +77,7 @@
 - name: plugins migrate
   environment:
     RAILS_ENV: production
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake
-    redmine:plugins:migrate
+  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake redmine:plugins:migrate
   args:
     chdir: "{{ redmine_runtime_directory }}"
   notify: redmine restart
