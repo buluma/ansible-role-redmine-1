@@ -1,5 +1,5 @@
 ---
-- name: Include {{ redmine_sql_driver }}-specific dependencies
+- name: Include driver-specific dependencies for {{ redmine_sql_driver }}
   ansible.builtin.include_vars: "{{ redmine_sql_driver }}.yml"
 - name: Default list of pacakages to be installed
   ansible.builtin.set_fact:
@@ -48,18 +48,20 @@
 
 - name: Download redmine
   ansible.builtin.get_url:
-    url: http://www.redmine.org/releases/redmine-{{ redmine_version }}.tar.gz
     dest: /home/redmine/
+    mode: "0644"
+    url: http://www.redmine.org/releases/redmine-{{ redmine_version }}.tar.gz
   become: true
   become_user: redmine
   when: not redmine_cat.stat.exists
 
 - name: Ensure redmine runtime directory exists
   ansible.builtin.file:
+    group: redmine
+    mode: "0755"
+    owner: redmine
     path: "{{ redmine_runtime_directory }}"
     state: directory
-    owner: redmine
-    group: redmine
   when: not redmine_cat.stat.exists
 
 # First we create the fcontext before files are created in the directory
@@ -92,7 +94,9 @@
   when: not redmine_cat.stat.exists
 
 - name: Copy Redmine source files to runtime directory
-  ansible.builtin.shell: "cp -a /home/redmine/redmine-{{ redmine_version }}/* {{ redmine_runtime_directory }}"
+  ansible.builtin.command:
+    cmd: cp -a /home/redmine/redmine-{{ redmine_version }}/. {{ redmine_runtime_directory }}
+    creates: "{{ redmine_runtime_directory }}/appveyor.yml"
   become: true
   become_user: redmine
   when: not redmine_cat.stat.exists
@@ -141,10 +145,13 @@
   become_user: redmine
 
 - name: Install mimemagic
-  ansible.builtin.shell: "set -o pipefail ; gem install mimemagic -v '0.4.3'"
-  register: mimemagic
-  # changed_when: no
-  # failed_when: no
+  community.general.gem:
+    name: mimemagic
+    state: present
+    user_install: true
+    version: "0.4.3"
+  become: true
+  become_user: redmine
 
 - name: install the gems needed by Redmine via bundler
   community.general.bundler:
