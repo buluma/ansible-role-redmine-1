@@ -50,7 +50,7 @@
   ansible.builtin.get_url:
     dest: /home/redmine/
     mode: "0644"
-    url: http://www.redmine.org/releases/redmine-{{ redmine_version }}.tar.gz
+    url: "http://www.redmine.org/releases/redmine-{{ redmine_version }}.tar.gz"
   become: true
   become_user: redmine
   when: not redmine_cat.stat.exists
@@ -189,7 +189,7 @@
   become_user: redmine
   register: db_migrate
   notify:
-    - creates db migration
+    - Creates db migration
   tags:
     - skip_ansible_lint
 
@@ -213,6 +213,7 @@
     mode: "0755"
   become: true
   become_user: redmine
+  when: redmine_configure_unicorn
 
 - name: Systemd script
   ansible.builtin.template:
@@ -242,7 +243,7 @@
     creates: /home/redmine/.ansible-creates-default-data
   when: redmine_default_data
   notify:
-    - creates default data
+    - Creates default data
   tags:
     - skip_ansible_lint
   environment:
@@ -259,7 +260,7 @@
     - http
     - https
   notify:
-    - firewalld restart
+    - Firewalld restart
   when: redmine_configure_firewalld
 
 - name: Permissions for Nginx to read Redmine files
@@ -279,7 +280,7 @@
     dest: /etc/nginx/conf.d/
     mode: "0755"
   notify:
-    - nginx restart
+    - Nginx restart
   when:
     - redmine_configure_nginx
     - redmine_nginx_config_template == "plain"
@@ -290,7 +291,7 @@
     dest: /etc/nginx/conf.d/redmine.conf
     mode: "0755"
   notify:
-    - nginx restart
+    - Nginx restart
   when:
     - redmine_configure_nginx
     - redmine_nginx_config_template == "tls"
@@ -301,7 +302,7 @@
     dest: /etc/nginx/conf.d/redmine.conf
     mode: "0755"
   notify:
-    - nginx restart
+    - Nginx restart
   when:
     - redmine_configure_nginx
     - redmine_nginx_config_template == "custom"
