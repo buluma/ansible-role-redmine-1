@@ -186,7 +186,7 @@ redmine_version: "3.4.11"
 # redmine_runtime_directory: "/home/redmine/redmine-{{ redmine_version }}"
 redmine_runtime_directory: "/srv/redmine/redmine"
 
-redmine_sql_driver: mysql2
+redmine_sql_driver: "mysql2"
 redmine_sql_database_name: "redmine"
 redmine_sql_database_host: "localhost"
 redmine_sql_username: "redmine"
@@ -206,12 +206,12 @@ redmine_unicorn_port: 5000
 redmine_nginx_bind_ip:
 redmine_plugins: []
 redmine_configure_selinux: false
-redmine_bundler_version: 1.16.1
+redmine_bundler_version: "1.16.1"
 
 redmine_additional_configuration: false
 redmine_enable_smtp_email: false
 redmine_smtp_settings_address: localhost
-redmine_smtp_settings_port: 25
+redmine_smtp_settings_port: "25"
 redmine_smtp_settings_authentication: plain
 redmine_smtp_settings_domain: redmine.example.com
 redmine_smtp_settings_user_name:
@@ -274,3 +274,4 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 ## [Author Information](#author-information)
 
 [Michael Buluma](https://buluma.github.io/)
+
