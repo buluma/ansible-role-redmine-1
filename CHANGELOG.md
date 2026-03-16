@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/buluma/ansible-role-redmine-1/tree/HEAD)
+
+[Full Changelog](https://github.com/buluma/ansible-role-redmine-1/compare/0.1.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump release-drafter/release-drafter from 6 to 7 [\#11](https://github.com/buluma/ansible-role-redmine-1/pull/11) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [0.1.0](https://github.com/buluma/ansible-role-redmine-1/tree/0.1.0) (2022-05-03)
 
 [Full Changelog](https://github.com/buluma/ansible-role-redmine-1/compare/fb9dcef3d3beb5bb74718c146dc9878fb90dce39...0.1.0)
