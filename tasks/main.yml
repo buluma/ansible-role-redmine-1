@@ -168,21 +168,20 @@
     path: "{{ redmine_runtime_directory }}/config/initializers/secret_token.rb"
   register: secret_token_stat
 
-- name: generate secret token
+- name: Generate secret token
   become: true
   become_user: redmine
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake generate_secret_token
-  args:
+  ansible.builtin.shell:
+    cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake generate_secret_token
     chdir: "{{ redmine_runtime_directory }}"
   when: not secret_token_stat.stat.exists
-  tags:
-    - skip_ansible_lint
+  changed_when: true
 
-- name: migrate database
+- name: Migrate database
   environment:
     RAILS_ENV: production
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake db:migrate
-  args:
+  ansible.builtin.shell:
+    cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake db:migrate
     creates: "/home/redmine/.ansible-creates-db-migrate"
     chdir: "{{ redmine_runtime_directory }}"
   become: true
@@ -190,8 +189,6 @@
   register: db_migrate
   notify:
     - Creates db migration
-  tags:
-    - skip_ansible_lint
 
 - name: Directories for shared resources
   ansible.builtin.file:
@@ -234,18 +231,16 @@
     - "files"
     - "log"
 
-- name: populate default data
-  shell: /home/redmine/bin/bundle exec /home/redmine/bin/rake redmine:load_default_data
-  become: true
-  become_user: redmine
-  args:
+- name: Populate default data
+  ansible.builtin.shell:
+    cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake redmine:load_default_data
     chdir: "{{ redmine_runtime_directory }}"
     creates: /home/redmine/.ansible-creates-default-data
+  become: true
+  become_user: redmine
   when: redmine_default_data
   notify:
     - Creates default data
-  tags:
-    - skip_ansible_lint
   environment:
     REDMINE_LANG: "{{ redmine_language }}"
     RAILS_ENV: production
