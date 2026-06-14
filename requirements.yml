@@ -7,6 +7,6 @@ roles:
   - name: buluma.mysql
   - name: buluma.nginx
     # - name: buluma.postgresql
-collections:
+collections: []
   - name: community.general
   - name: ansible.posix
