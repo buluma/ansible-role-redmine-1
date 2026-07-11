@@ -171,7 +171,7 @@
 - name: Generate secret token
   become: true
   become_user: redmine
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake generate_secret_token
     chdir: "{{ redmine_runtime_directory }}"
   when: not secret_token_stat.stat.exists
@@ -180,7 +180,7 @@
 - name: Migrate database
   environment:
     RAILS_ENV: production
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake db:migrate
     creates: "/home/redmine/.ansible-creates-db-migrate"
     chdir: "{{ redmine_runtime_directory }}"
@@ -232,7 +232,7 @@
     - "log"
 
 - name: Populate default data
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: /home/redmine/bin/bundle exec /home/redmine/bin/rake redmine:load_default_data
     chdir: "{{ redmine_runtime_directory }}"
     creates: /home/redmine/.ansible-creates-default-data

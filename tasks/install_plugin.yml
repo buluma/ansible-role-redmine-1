@@ -59,8 +59,7 @@
   become_user: redmine
 
 - name: install_plugin | Rename plugin mapping directory
-  ansible.builtin.command:
-    mv "{{ redmine_runtime_directory }}/plugins/{{ item.map_directory.src }}" "{{ redmine_runtime_directory }}/plugins/{{
+  ansible.builtin.command: mv "{{ redmine_runtime_directory }}/plugins/{{ item.map_directory.src }}" "{{ redmine_runtime_directory }}/plugins/{{
     item.map_directory.dest }}"
   args:
     creates: "{{ redmine_runtime_directory }}/.ansible-plugin-{{ item.base_name }}.creates"
