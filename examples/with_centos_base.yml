@@ -11,5 +11,5 @@ vars:
   - redmine_sql_password: "password"
   - redmine_unicorn_port: 5777
 roles:
-  - bngsudheer.centos_base
+  - buluma.centos_base
   - ansible-role-redmine

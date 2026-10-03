@@ -37,6 +37,6 @@
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.centos_base
-    - role: bngsudheer.ruby
+    - role: buluma.ruby
     - role: buluma.nginx
     - role: buluma.mysql
