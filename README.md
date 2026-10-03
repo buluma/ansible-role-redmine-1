@@ -25,7 +25,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
     - ruby_install_globally: true
   roles:
     # - buluma.centos_base
-    - bngsudheer.ruby
+    - buluma.ruby
     # - buluma.ruby
 
 - name: Converge
@@ -108,7 +108,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.centos_base
-    - role: bngsudheer.ruby
+    - role: buluma.ruby
     - role: buluma.nginx
     - role: buluma.mysql
 ```
@@ -179,7 +179,7 @@ The following roles are used to prepare a system. You can prepare your system in
 |[buluma.bootstrap](https://galaxy.ansible.com/buluma/bootstrap)|[![Build Status GitHub](https://github.com/buluma/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-bootstrap/actions)|
 |[buluma.epel](https://galaxy.ansible.com/buluma/epel)|[![Build Status GitHub](https://github.com/buluma/ansible-role-epel/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-epel/actions)|
 |[buluma.centos_base](https://galaxy.ansible.com/buluma/centos_base)|[![Build Status GitHub](https://github.com/buluma/ansible-role-centos_base/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-centos_base/actions)|
-|[bngsudheer.ruby](https://galaxy.ansible.com/buluma/bngsudheer.ruby)|[![Build Status GitHub](https://github.com/buluma/bngsudheer.ruby/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/bngsudheer.ruby/actions)|
+|[buluma.ruby](https://galaxy.ansible.com/buluma/buluma.ruby)|[![Build Status GitHub](https://github.com/buluma/buluma.ruby/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/buluma.ruby/actions)|
 |[buluma.mysql](https://galaxy.ansible.com/buluma/mysql)|[![Build Status GitHub](https://github.com/buluma/ansible-role-mysql/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-mysql/actions)|
 |[buluma.nginx](https://galaxy.ansible.com/buluma/nginx)|[![Build Status GitHub](https://github.com/buluma/ansible-role-nginx/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-nginx/actions)|
 
